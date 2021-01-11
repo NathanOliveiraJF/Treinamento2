@@ -9,5 +9,7 @@ namespace ExercicioAula04
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Endereco { get; set; }
+
+        ///colocar modelos aqui abstratos
     }
 }
