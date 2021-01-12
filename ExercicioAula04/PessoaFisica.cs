@@ -8,5 +8,7 @@ namespace ExercicioAula04
     {
         public string Cpf { get; set; }
         public DateTime DataNascimento { get; set; }
+        public override string Etiqueta => $"\nPessoa Física\n{ this.Nome}\n{ this.Endereco}";
+        
     }
 }

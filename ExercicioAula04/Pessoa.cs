@@ -10,6 +10,6 @@ namespace ExercicioAula04
         public string Email { get; set; }
         public string Endereco { get; set; }
 
-        ///colocar modelos aqui abstratos
+        public abstract string Etiqueta { get;}
     }
 }

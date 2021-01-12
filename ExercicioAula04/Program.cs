@@ -40,8 +40,11 @@ namespace ExercicioAula04
                 {
                     var pf = new PessoaFisica();
                     Console.Clear();
-                    pe.Add(PrencherDados(pf));
-                    Console.WriteLine("Pessoa Física Inserida com Sucesso!");
+                    if(PrencherDados(pf) != null)
+                    {
+                        pe.Add(PrencherDados(pf));
+                        Console.WriteLine("Pessoa Física Inserida com Sucesso!");
+                    }
                 }
                 else
                     Console.Write("Opção inválida!");
@@ -85,11 +88,14 @@ namespace ExercicioAula04
             try
             {
                 pf.DataNascimento = DateTime.Parse(Console.ReadLine());
+               
             }
             catch (Exception)
             {
-                throw new Exception("Data informada inválida!");
+               Console.WriteLine("Data informada inválida!");
+               return null;
             }
+
             return pf;
 
         }
@@ -101,7 +107,7 @@ namespace ExercicioAula04
             {
                 case "a":
                     //etiqueta
-                    Etiqueta(pe);
+                    ImprimeEtiqueta(pe);
                     break;
                 case "b":
                     //carta
@@ -118,24 +124,13 @@ namespace ExercicioAula04
             }
         }
 
-        private static void Etiqueta(List<Pessoa> pe)
+        private static void ImprimeEtiqueta(List<Pessoa> pe)
         {
             Console.WriteLine("Etiqueta de Correspondência");
             foreach (var item in pe)
-            {
-                if (item is PessoaFisica)
-                {
-                    Console.WriteLine("\nPessoa Física");
-                    Console.WriteLine($"{item.Nome}\n{item.Endereco}");
-                }
-                else
-                {
-                    var pf = (PessoaJuridica)item;
-                    Console.WriteLine("\nPessoa Juridica");
-                    Console.WriteLine($"{pf.Nome}\nAos cuidados de {pf.Contato}\n{pf.Endereco}");
-                }
-            }
+                Console.WriteLine(item.Etiqueta);
         }
+
 
         private static void Menu()
         {
