@@ -116,6 +116,7 @@ namespace ExercicioAula04
                     break;
                 case "c":
                     //nota
+                    ImprimeNotaPromissoria(pe);
                     break;
                 case "d":
                     PreencherLista(pe);
@@ -123,6 +124,31 @@ namespace ExercicioAula04
                 default:
                     Console.Write("Opção não existe");
                     break;
+            }
+        }
+
+        private static void ImprimeNotaPromissoria(List<Pessoa> pe)
+        {
+            
+            Console.WriteLine("Nota Promissória");
+            foreach (var item in pe) 
+            {
+                try
+                {
+                    Console.Write($"\nInforme a data da Nota Promissoria de {item.Nome}: ");
+                    DateTime data = DateTime.Parse(Console.ReadLine());
+
+                    Console.Write($"Informe o valor da Nota Promissoria de {item.Nome}: ");
+                    var valor = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine(item.NotaPromissoria(valor, data));
+
+                }
+                catch (Exception)
+                {
+
+                    Console.WriteLine("Data inválida! preencha novamente");
+                    ImprimeNotaPromissoria(pe);
+                }
             }
         }
 

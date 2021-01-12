@@ -13,5 +13,7 @@ namespace ExercicioAula04
         public abstract string Etiqueta { get;}
 
         public abstract string CartaCobranca { get; }
+
+        public abstract string NotaPromissoria(double valor, DateTime data);
     }
 }

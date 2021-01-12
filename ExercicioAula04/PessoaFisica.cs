@@ -10,5 +10,10 @@ namespace ExercicioAula04
         public DateTime DataNascimento { get; set; }
         public override string Etiqueta => $"\nPessoa Física\n{ this.Nome}\n{ this.Endereco}";
         public override string CartaCobranca => $"\nPessoa Física\nCaro(a){ this.Nome},Você me deve!";
+
+        public override string NotaPromissoria(double valor, DateTime data)
+        {
+           return $"\nPessoa Física\nEu {this.Nome} prometo que vou pagar {valor:C2} na data {data.ToShortDateString()}.";
+        }
     }
 }
