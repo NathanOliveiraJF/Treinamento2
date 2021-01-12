@@ -28,59 +28,70 @@ namespace ExercicioAula04
                 Console.WriteLine("\nPreenchimento de Lista");
                 Console.WriteLine("Digite [ pj ] para Pessoa Jurídica \n ou [ pf ] para Pessoa Física");
                 Console.Write("Deseja inserir Pessoa Jurídica ou Física? ");
-                var opcao = Console.ReadLine();
-                if (opcao.ToLower() == "pj")
+                var opcao = Console.ReadLine().ToLower();
+                if (opcao == "pj")
                 {
                     var pj = new PessoaJuridica();
-                    Console.Write("Nome da empresa: ");
-                    pj.Nome = Console.ReadLine();
-                    Console.Write("Email: ");
-                    pj.Email = Console.ReadLine();
-                    Console.Write("Endereço: ");
-                    pj.Endereco = Console.ReadLine();
-                    Console.Write("Cnpj: ");
-                    pj.Cnpj = Console.ReadLine();
-                    Console.Write("Contato: ");
-                    pj.Contato = Console.ReadLine();
                     Console.Clear();
-                    pe.Add(pj);
-                    Console.WriteLine("Pessoa Inserida com Sucesso!");
+                    pe.Add(PrencherDados(pj));
+                    Console.WriteLine("Pessoa Jurídica Inserida com Sucesso!");
                 }
-                else if (opcao.ToLower() == "pf")
+                else if (opcao == "pf")
                 {
                     var pf = new PessoaFisica();
-                    Console.Write("Nome da Pessoa: ");
-                    pf.Nome = Console.ReadLine();
-                    Console.Write("Email: ");
-                    pf.Email = Console.ReadLine();
-                    Console.Write("Endereço: ");
-                    pf.Endereco = Console.ReadLine();
-                    Console.Write("Cpf: ");
-                    pf.Cpf = Console.ReadLine();
-                    Console.Write("Data de Nascimento: ");
-                    try
-                    {
-                        pf.DataNascimento = DateTime.Parse(Console.ReadLine());
-                    }
-                    catch (Exception)
-                    {
-
-                        throw new Exception("Data informada inválida!");
-                    }
                     Console.Clear();
-                    pe.Add(pf);
-                    Console.WriteLine("Pessoa Inserida com Sucesso!");
+                    pe.Add(PrencherDados(pf));
+                    Console.WriteLine("Pessoa Física Inserida com Sucesso!");
                 }
                 else
                     Console.Write("Opção inválida!");
 
-
                 Console.Write("\nDeseja continuar preenchendo a lista ?\ndigite (s) para [sim] ou n para [não]): ");
-                opcao = Console.ReadLine();
-                if (opcao.ToLower() == "n")
+                opcao = Console.ReadLine().ToLower();
+                if (opcao == "n")
                     break;
+            }
+        }
+
+        private static Pessoa PrencherDados(Pessoa p)
+        {
+            if (p is PessoaJuridica)
+            {
+                var pj = new PessoaJuridica();
+                Console.Write("Nome da empresa: ");
+                pj.Nome = Console.ReadLine();
+                Console.Write("Email: ");
+                pj.Email = Console.ReadLine();
+                Console.Write("Endereço: ");
+                pj.Endereco = Console.ReadLine();
+                Console.Write("Cnpj: ");
+                pj.Cnpj = Console.ReadLine();
+                Console.Write("Contato: ");
+                pj.Contato = Console.ReadLine();
+                return pj;
 
             }
+
+            var pf = new PessoaFisica();
+            Console.Write("Nome da Pessoa: ");
+            pf.Nome = Console.ReadLine();
+            Console.Write("Email: ");
+            pf.Email = Console.ReadLine();
+            Console.Write("Endereço: ");
+            pf.Endereco = Console.ReadLine();
+            Console.Write("Cpf: ");
+            pf.Cpf = Console.ReadLine();
+            Console.Write("Data de Nascimento: ");
+            try
+            {
+                pf.DataNascimento = DateTime.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                throw new Exception("Data informada inválida!");
+            }
+            return pf;
+
         }
 
         private static void Opcoes(string op, List<Pessoa> pe)
@@ -109,10 +120,10 @@ namespace ExercicioAula04
 
         private static void Etiqueta(List<Pessoa> pe)
         {
-            Console.WriteLine("\nEtiqueta de Correspondência");
+            Console.WriteLine("Etiqueta de Correspondência");
             foreach (var item in pe)
             {
-                if (item is PessoaFisica) 
+                if (item is PessoaFisica)
                 {
                     Console.WriteLine("\nPessoa Física");
                     Console.WriteLine($"{item.Nome}\n{item.Endereco}");
@@ -130,12 +141,12 @@ namespace ExercicioAula04
         {
             Console.WriteLine("\n----------------------------------------");
             Console.WriteLine("Menu");
-            Console.WriteLine("a) Imprimir etiqueta para correspondência");
-            Console.WriteLine("b) Imprimir carta de cobrança");
-            Console.WriteLine("c) Imprimir nota promissória");
-            Console.WriteLine("d) continuar preenchendo a lista");
-            Console.WriteLine("1) para sair");
-            Console.WriteLine("Qual das opções você deseja? ");
+            Console.WriteLine("a) Imprimir etiqueta para correspondência" +
+                "\nb) Imprimir carta de cobrança" +
+                "\nc) Imprimir nota promissória" +
+                "\nd) continuar preenchendo a lista" +
+                "\n1) para sair" +
+                "\nQual das opções você deseja? ");
         }
     }
 }
