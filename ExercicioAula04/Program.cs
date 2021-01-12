@@ -14,10 +14,12 @@ namespace ExercicioAula04
                 Menu();
                 var opcao = Console.ReadLine();
                 if (opcao.ToLower() == "1")
+                {
+                    Console.WriteLine("saindo...");
                     break;
+                }
                 Opcoes(opcao, listaDePessoas);
             }
-            Console.ReadKey();
         }
 
         private static void PreencherLista(List<Pessoa> pe)
@@ -26,21 +28,19 @@ namespace ExercicioAula04
             {
                 Console.Clear();
                 Console.WriteLine("\nPreenchimento de Lista");
-                Console.WriteLine("Digite [ pj ] para Pessoa Jurídica \n ou [ pf ] para Pessoa Física");
+                Console.WriteLine("Digite [ pj ] para Pessoa Jurídica\nOu [ pf ] para Pessoa Física");
                 Console.Write("Deseja inserir Pessoa Jurídica ou Física? ");
                 var opcao = Console.ReadLine().ToLower();
                 if (opcao == "pj")
                 {
-                    var pj = new PessoaJuridica();
                     Console.Clear();
-                    pe.Add(PrencherDados(pj));
+                    pe.Add(DadosPessoaJuridica());
                     Console.WriteLine("Pessoa Jurídica Inserida com Sucesso!");
                 }
                 else if (opcao == "pf")
                 {
-                    var pf = new PessoaFisica();
                     Console.Clear();
-                    var pes = PrencherDados(pf);
+                    var pes = DadosPessoaFisica();
                     if (pes != null)
                     {
                         pe.Add(pes);
@@ -57,25 +57,9 @@ namespace ExercicioAula04
             }
         }
 
-        private static Pessoa PrencherDados(Pessoa p)
+        private static PessoaFisica DadosPessoaFisica()
         {
-            if (p is PessoaJuridica)
-            {
-                var pj = new PessoaJuridica();
-                Console.Write("Nome da empresa: ");
-                pj.Nome = Console.ReadLine();
-                Console.Write("Email: ");
-                pj.Email = Console.ReadLine();
-                Console.Write("Endereço: ");
-                pj.Endereco = Console.ReadLine();
-                Console.Write("Cnpj: ");
-                pj.Cnpj = Console.ReadLine();
-                Console.Write("Contato: ");
-                pj.Contato = Console.ReadLine();
-                return pj;
-
-            }
-
+            Console.WriteLine("\nPreenchendo Dados Pessoa Física");
             var pf = new PessoaFisica();
             Console.Write("Nome da Pessoa: ");
             pf.Nome = Console.ReadLine();
@@ -89,15 +73,33 @@ namespace ExercicioAula04
             try
             {
                 pf.DataNascimento = DateTime.Parse(Console.ReadLine());
-               
+
             }
             catch (Exception)
             {
-               Console.WriteLine("Data informada inválida!");
-               return null;
+                Console.WriteLine("Data informada inválida!");
+                return null;
             }
 
             return pf;
+        }
+
+        private static PessoaJuridica DadosPessoaJuridica()
+        {
+
+            Console.WriteLine("\nPreenchendo Dados Pessoa Jurídica");
+            var pj = new PessoaJuridica();
+            Console.Write("Nome da empresa: ");
+            pj.Nome = Console.ReadLine();
+            Console.Write("Email: ");
+            pj.Email = Console.ReadLine();
+            Console.Write("Endereço: ");
+            pj.Endereco = Console.ReadLine();
+            Console.Write("Cnpj: ");
+            pj.Cnpj = Console.ReadLine();
+            Console.Write("Contato: ");
+            pj.Contato = Console.ReadLine();
+            return pj;
 
         }
 
@@ -129,9 +131,9 @@ namespace ExercicioAula04
 
         private static void ImprimeNotaPromissoria(List<Pessoa> pe)
         {
-            
+
             Console.WriteLine("Nota Promissória");
-            foreach (var item in pe) 
+            foreach (var item in pe)
             {
                 try
                 {
@@ -145,8 +147,8 @@ namespace ExercicioAula04
                 }
                 catch (Exception)
                 {
-
-                    Console.WriteLine("Data inválida! preencha novamente");
+                    Console.Clear();
+                    Console.WriteLine("Data inválida ou valor! preencha novamente\n");
                     ImprimeNotaPromissoria(pe);
                 }
             }
