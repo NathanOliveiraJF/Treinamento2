@@ -11,5 +11,7 @@ namespace ExercicioAula04
         public string Endereco { get; set; }
 
         public abstract string Etiqueta { get;}
+
+        public abstract string CartaCobranca { get; }
     }
 }

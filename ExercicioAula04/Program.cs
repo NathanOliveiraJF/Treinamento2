@@ -40,9 +40,10 @@ namespace ExercicioAula04
                 {
                     var pf = new PessoaFisica();
                     Console.Clear();
-                    if(PrencherDados(pf) != null)
+                    var pes = PrencherDados(pf);
+                    if (pes != null)
                     {
-                        pe.Add(PrencherDados(pf));
+                        pe.Add(pes);
                         Console.WriteLine("Pessoa Física Inserida com Sucesso!");
                     }
                 }
@@ -111,6 +112,7 @@ namespace ExercicioAula04
                     break;
                 case "b":
                     //carta
+                    ImprimeCartaDeCobranca(pe);
                     break;
                 case "c":
                     //nota
@@ -122,6 +124,13 @@ namespace ExercicioAula04
                     Console.Write("Opção não existe");
                     break;
             }
+        }
+
+        private static void ImprimeCartaDeCobranca(List<Pessoa> pe)
+        {
+            Console.WriteLine("Carta de Cobrança");
+            foreach (var item in pe)
+                Console.WriteLine(item.CartaCobranca);
         }
 
         private static void ImprimeEtiqueta(List<Pessoa> pe)
