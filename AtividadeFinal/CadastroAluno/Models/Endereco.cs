@@ -13,5 +13,9 @@ namespace CadastroAluno.Models
         public string Bairro { get; set; }
         public string Cidade { get; set; }
 
+
+        public override string ToString()
+            => $"Tipo: {Tipo}\nLogradouro: {Logradouro}\nNumero: {Numero}\nComplemento: {Complemento}\nBairro: {Bairro}\nCidade: {Cidade}";
+        
     }
 }
