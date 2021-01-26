@@ -1,5 +1,6 @@
 ﻿using CadastroAluno.Models;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 
@@ -7,12 +8,6 @@ namespace CadastroAluno
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Opcao();
-        }
-
-      
         private static void Opcao()
         {
             Menu();
@@ -21,35 +16,44 @@ namespace CadastroAluno
             switch (op)
             {
                 case 1:
-                  //  InserirAluno();
-                    InserirEndereco();
+                    InserirAluno();
                     break;
                 default:
                     Console.WriteLine("opção inválida!");
                     break;
             }
         }
+        private static void Menu()
+        {
+            Console.Write(
+                           "1) Inserir Aluno\n"
+                           + "2) Alterar Aluno\n"
+                           + "3) Excluir Aluno\n"
+                           + "4) Consultar aluno pela Matrícula\n"
+                           + "5) Consultar aluno por parte do nome\n");
+        }
 
         private static void InserirAluno()
         {
-            var aluno = new Aluno();
-            Console.Write("Nome do Aluno: ");
-            aluno.Nome = Console.ReadLine();
-            Console.Write("Matricula: ");
-            aluno.Matricula = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Email");
-            aluno.Email = Console.ReadLine();
+            Aluno aluno = ColetaDadosAluno();
+            InserirEndereco(aluno);
             //TODO: criar AlunoDAO e método inserir.
         }
-
-        private static void InserirEndereco()
+        private static void InserirEndereco(Aluno aluno)
         {
-            Console.WriteLine("Há endereço a ser informado: \n[ s ] para sim e [ n ] para não");
-            var isEndereco = Console.ReadLine();
+            Console.Write("Há endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
+            string isEndereco = Console.ReadLine();
+            while (isEndereco.ToLower().Trim()[0] == 's')
+            {
+                aluno.Enderecos.Add(ColetaDadosEndereco());
+                Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
+                isEndereco = Console.ReadLine();
+            }
+            //TODO: criar EnderecoDAO e método inserir
+        }
 
-            if (isEndereco.ToLower().Trim()[0] == 'n')
-                return;
-
+        private static Endereco ColetaDadosEndereco()
+        {
             var endereco = new Endereco();
             Console.Write("Tipo de Endereço: ");
             endereco.Tipo = Console.ReadLine();
@@ -63,17 +67,25 @@ namespace CadastroAluno
             endereco.Bairro = Console.ReadLine();
             Console.Write("Cidade: ");
             endereco.Cidade = Console.ReadLine();
-            //TODO: criar EnderecoDAO e método inserir
+            return endereco;
         }
 
-        private static void Menu()
+        private static Aluno ColetaDadosAluno()
         {
-            Console.WriteLine(
-                "1) Inserir Aluno\n"
-                + "2) Alterar Aluno\n"
-                + "3) Excluir Aluno\n"
-                + "4) Consultar aluno pela Matrícula\n"
-                + "5) Consultar aluno por parte do nome");
+            var aluno = new Aluno();
+            Console.Write("Nome do Aluno: ");
+            aluno.Nome = Console.ReadLine();
+            Console.Write("Matricula: ");
+            aluno.Matricula = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Email: ");
+            aluno.Email = Console.ReadLine();
+            return aluno;
         }
+
+        static void Main(string[] args)
+        {
+            Opcao();
+        }
+
     }
 }

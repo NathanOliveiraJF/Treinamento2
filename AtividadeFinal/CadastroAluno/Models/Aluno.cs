@@ -9,6 +9,6 @@ namespace CadastroAluno.Models
         public int Matricula { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-        public IEnumerable<Endereco> Enderecos { get; set; }
+        public IList<Endereco> Enderecos { get; set; } = new List<Endereco>();
     }
 }
