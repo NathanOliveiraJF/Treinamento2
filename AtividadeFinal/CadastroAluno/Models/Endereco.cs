@@ -6,16 +6,14 @@ namespace CadastroAluno.Models
 {
     class Endereco
     {
+        public string Id { get; set; }
         public string Tipo { get; set; }
         public string Logradouro { get; set; }
         public string Numero { get; set; }
         public string Complemento { get; set; }
         public string Bairro { get; set; }
         public string Cidade { get; set; }
-
-
-        public override string ToString()
-            => $"Tipo: {Tipo}\nLogradouro: {Logradouro}\nNumero: {Numero}\nComplemento: {Complemento}\nBairro: {Bairro}\nCidade: {Cidade}";
-        
+        public string IdAluno { get; set; }
+        public Aluno Aluno { get; set; }
     }
 }

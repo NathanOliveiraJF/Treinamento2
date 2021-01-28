@@ -27,7 +27,7 @@ namespace CadastroAluno.DAOs
             throw new NotImplementedException();
         }
 
-        public IList<Aluno> RetornarTodos()
+        public IList<Aluno> RetornaTodos()
         {
             throw new NotImplementedException();
         }

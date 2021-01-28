@@ -27,7 +27,7 @@ namespace CadastroAluno.DAOs
             throw new NotImplementedException();
         }
 
-        public IList<Endereco> RetornarTodos()
+        public IList<Endereco> RetornaTodos()
         {
             throw new NotImplementedException();
         }
