@@ -3,14 +3,15 @@ using CadastroAluno.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CadastroAluno.DAOs
 {
     class AlunoDAO : IDAO<Aluno>
     {
-        private readonly DbContext _DbContext;
-        public AlunoDAO(DbContext DbContext)
+        private readonly CadastroAlunoDbContext _DbContext;
+        public AlunoDAO(CadastroAlunoDbContext DbContext)
         {
             _DbContext = DbContext;
         }
@@ -22,12 +23,13 @@ namespace CadastroAluno.DAOs
 
         public void Inserir(Aluno obj)
         {
-            if (obj.Id == null)
-                obj.Id = Guid.NewGuid().ToString();
-
-            _DbContext.Add(obj);
-            _DbContext.SaveChanges();
            
+                if (obj.IdAluno == null)
+                    obj.IdAluno = Guid.NewGuid().ToString();
+
+                _DbContext.Add(obj);
+                _DbContext.SaveChanges();
+            
         }
 
         public Aluno RetornarPorId(string id)

@@ -34,6 +34,9 @@ namespace CadastroAluno.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Matricula")
+                        .IsUnique();
+
                     b.ToTable("Alunos");
                 });
 

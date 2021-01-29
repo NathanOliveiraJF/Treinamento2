@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CadastroAluno.DAL.Migrations
 {
     [DbContext(typeof(CadastroAlunoDbContext))]
-    [Migration("20210128225250_PrimeiraMigration")]
-    partial class PrimeiraMigration
+    [Migration("20210129205620_SegundaMigration")]
+    partial class SegundaMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,9 @@ namespace CadastroAluno.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Matricula")
+                        .IsUnique();
 
                     b.ToTable("Alunos");
                 });

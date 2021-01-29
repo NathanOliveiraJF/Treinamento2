@@ -19,10 +19,13 @@ namespace CadastroAluno.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Aluno>()
-                .HasKey(e => e.Id);
+                .HasKey(e => e.IdAluno);
 
+            modelBuilder.Entity<Aluno>()
+                .HasIndex(e => e.Matricula).IsUnique();
+            
             modelBuilder.Entity<Endereco>()
-                .HasKey(e => e.Id);
+                .HasKey(e => e.IdEndereco);
 
             modelBuilder.Entity<Endereco>()
                 .HasOne(e => e.Aluno)

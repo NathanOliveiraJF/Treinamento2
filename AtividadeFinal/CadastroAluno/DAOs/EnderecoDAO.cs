@@ -1,17 +1,19 @@
-﻿using CadastroAluno.Models;
+﻿using CadastroAluno.DAL;
+using CadastroAluno.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CadastroAluno.DAOs
 {
     class EnderecoDAO : IDAO<Endereco>
     {
-        private readonly DbContext _dbContext;
-        public EnderecoDAO(DbContext dbContext)
+        private readonly CadastroAlunoDbContext _DbContext;
+        public EnderecoDAO(CadastroAlunoDbContext DbContext)
         {
-            _dbContext = dbContext;
+            _DbContext = DbContext;
         }
         public void Atualizar(Endereco obj)
         {
@@ -26,11 +28,11 @@ namespace CadastroAluno.DAOs
         public void Inserir(Endereco obj)
         {
 
-            if (obj.Id == null)
-                obj.Id = Guid.NewGuid().ToString();
+            if (obj.IdEndereco == null)
+                obj.IdEndereco = Guid.NewGuid().ToString();
 
-            _dbContext.Add(obj);
-            _dbContext.SaveChanges();
+            _DbContext.Add(obj);
+            _DbContext.SaveChanges();
         }
 
         public Endereco RetornarPorId(string id)

@@ -2,7 +2,7 @@
 
 namespace CadastroAluno.DAL.Migrations
 {
-    public partial class PrimeiraMigration : Migration
+    public partial class SegundaMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,6 +43,12 @@ namespace CadastroAluno.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Alunos_Matricula",
+                table: "Alunos",
+                column: "Matricula",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enderecos_IdAluno",
