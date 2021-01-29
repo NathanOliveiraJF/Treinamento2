@@ -1,4 +1,6 @@
-﻿using CadastroAluno.Models;
+﻿using CadastroAluno.DAL;
+using CadastroAluno.DAOs;
+using CadastroAluno.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -36,8 +38,12 @@ namespace CadastroAluno
         private static void InserirAluno()
         {
             Aluno aluno = ColetaDadosAluno();
+            var context = new AlunoDAO(new CadastroAlunoDbContext());
+            context.Inserir(aluno);
+            
             InserirEndereco(aluno);
-            //TODO: criar AlunoDAO e método inserir.
+
+            Console.WriteLine("Inserido!");
         }
         private static void InserirEndereco(Aluno aluno)
         {
@@ -45,11 +51,13 @@ namespace CadastroAluno
             string isEndereco = Console.ReadLine();
             while (isEndereco.ToLower().Trim()[0] == 's')
             {
-                aluno.Enderecos.Add(ColetaDadosEndereco());
+                var endereco = ColetaDadosEndereco();
+                endereco.IdAluno = aluno.Id;
+                var context = new EnderecoDAO(new CadastroAlunoDbContext());
+                context.Inserir(endereco);
                 Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
                 isEndereco = Console.ReadLine();
             }
-            //TODO: criar EnderecoDAO e método inserir
         }
 
         private static Endereco ColetaDadosEndereco()
