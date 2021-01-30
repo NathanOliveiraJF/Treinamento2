@@ -23,13 +23,15 @@ namespace CadastroAluno.DAOs
 
         public void Inserir(Aluno obj)
         {
-           
-                if (obj.IdAluno == null)
-                    obj.IdAluno = Guid.NewGuid().ToString();
+            if (obj.IdAluno == null)
+                obj.IdAluno = Guid.NewGuid().ToString();
 
-                _DbContext.Add(obj);
-                _DbContext.SaveChanges();
+            _DbContext.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+
+            foreach (var item in obj.Enderecos)
+                _DbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
             
+            _DbContext.SaveChanges();
         }
 
         public Aluno RetornarPorId(string id)
@@ -52,6 +54,6 @@ namespace CadastroAluno.DAOs
             throw new NotImplementedException();
         }
 
-        
+
     }
 }
