@@ -27,9 +27,48 @@ namespace CadastroAluno
                 case 3:
                     ExcluirAluno();
                     break;
+                case 4:
+                    ConsultarAlunoPelaMatricula();
+                    break;
                 default:
                     Console.WriteLine("opção inválida!");
                     break;
+            }
+        }
+
+        private static void ConsultarAlunoPelaMatricula()
+        {
+            var context = new AlunoDAO(new CadastroAlunoDbContext());
+            Console.Write("Informe a matrícula do Aluno: ");
+            int matricula = Convert.ToInt32(Console.ReadLine());
+            var aluno = context.RetornoPersonalizado((x) => x.Matricula == matricula).FirstOrDefault();
+            if (aluno != null)
+            {
+                DadosAluno(aluno);
+            }
+        }
+
+        private static void DadosAluno(Aluno aluno)
+        {
+            var propsInfoAluno = aluno.GetType().GetProperties();
+            Console.WriteLine("Dados Aluno");
+            foreach (var prop in propsInfoAluno)
+            {
+                Console.WriteLine($"    {prop.Name}: {prop.GetValue(aluno)}");
+                Console.WriteLine();
+            }
+            DadosEnderecoAluno(aluno.Enderecos);
+        }
+
+        private static void DadosEnderecoAluno(IList<Endereco> enderecos)
+        {
+            Console.WriteLine("\nDados endereço Aluno");
+            foreach (var end in enderecos)
+            {
+                var propsInfoEndereco = end.GetType().GetProperties();
+                foreach (var prop in propsInfoEndereco)
+                    Console.WriteLine($"    {prop.Name}: {prop.GetValue(end)}");
+                Console.WriteLine();
             }
         }
 
@@ -77,7 +116,7 @@ namespace CadastroAluno
             Console.WriteLine("Informe o tipo de endereço a ser alterado");
             var tipo = Console.ReadLine();
             var end = aluno.Enderecos.Where(x => x.Tipo == tipo).FirstOrDefault();
-            if(end != null)
+            if (end != null)
             {
                 Console.WriteLine("Informe uma nova Cidade");
                 end.Cidade = Console.ReadLine();
