@@ -18,7 +18,33 @@ namespace CadastroAluno.DAOs
 
         public void Atualizar(Aluno obj)
         {
-            throw new NotImplementedException();
+            var enderecos = _DbContext.Enderecos.Where(x => x.AlunoId == obj.AlunoId).ToList();
+
+            foreach (var end in obj.Enderecos)
+            {
+                var endContext = enderecos.Where(x => x.EnderecoId == end.EnderecoId).FirstOrDefault();
+                
+                if(endContext != null)
+                {
+                    _DbContext.Entry(endContext).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                    
+                    _DbContext.Entry(end).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                    enderecos.Remove(endContext);
+                }
+                else
+                {
+                    _DbContext.Entry(end).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                }
+            }
+
+            foreach (var item in enderecos)
+            {
+                _DbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            }
+
+            _DbContext.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _DbContext.SaveChanges();
         }
 
         public void Inserir(Aluno obj)
@@ -48,7 +74,9 @@ namespace CadastroAluno.DAOs
 
         public IList<Aluno> RetornoPersonalizado(Func<Aluno, bool> busca)
         {
-            throw new NotImplementedException();
+           return _DbContext.Alunos
+                .Include(e => e.Enderecos)
+                .Where(busca).ToList();
         }
 
         public void Deletar(string id)

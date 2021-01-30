@@ -3,6 +3,7 @@ using CadastroAluno.DAOs;
 using CadastroAluno.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 
@@ -20,11 +21,63 @@ namespace CadastroAluno
                 case 1:
                     InserirAluno();
                     break;
+                case 2:
+                    AlterarAluno();
+                    break;
                 default:
                     Console.WriteLine("opção inválida!");
                     break;
             }
         }
+
+        private static void AlterarAluno()
+        {
+            var context = new AlunoDAO(new CadastroAlunoDbContext());
+            Console.Write("Informe a matrícula do Aluno: ");
+            int matricula = Convert.ToInt32(Console.ReadLine());
+            var aluno = context.RetornoPersonalizado((aluno) => aluno.Matricula == matricula)[0];
+            if (aluno != null)
+            {
+                NovosDadosAluno(aluno);
+                Console.WriteLine("Deseja Inserir ou Atualizar um endereço: \n[ 2 ] para inserir\n[ 3 ] para atualizar");
+                var opc = Console.ReadLine();
+                if (opc == "2")
+                    InserirEndereco(aluno);
+                else if (opc == "3")
+                    AtualizaEndereco(aluno);
+                else
+                    return;
+
+                context.Atualizar(aluno);
+                Console.WriteLine("Atualizado");
+
+            }
+            else
+                Console.WriteLine("Matrícula inválida!!");
+        }
+
+        private static void AtualizaEndereco(Aluno aluno)
+        {
+            Console.WriteLine("Informe o tipo de endereço a ser alterado");
+            var tipo = Console.ReadLine();
+            var end = aluno.Enderecos.Where(x => x.Tipo == tipo).FirstOrDefault();
+            if(end != null)
+            {
+                Console.WriteLine("Informe uma nova Cidade");
+                end.Cidade = Console.ReadLine();
+            }
+        }
+
+        private static void NovosDadosAluno(Aluno aluno)
+        {
+            Console.WriteLine("Informe um novo nome");
+            aluno.Nome = Console.ReadLine();
+
+            Console.WriteLine("Informe um novo e-mail");
+            aluno.Email = Console.ReadLine();
+
+        }
+
         private static void Menu()
         {
             Console.Write(
@@ -39,22 +92,34 @@ namespace CadastroAluno
         {
             Aluno aluno = ColetaDadosAluno();
             var context = new AlunoDAO(new CadastroAlunoDbContext());
-            InserirEndereco(aluno);
+            Console.WriteLine("Há endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
+            string resp = Console.ReadLine();
+            while (resp.ToLower().Trim()[0] == 's')
+            {
+                InserirEndereco(aluno);
+                Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
+                resp = Console.ReadLine();
+            }
             context.Inserir(aluno);
-            Console.WriteLine("Inserido!");
+            Console.WriteLine($"{aluno.Nome} cadastrado com sucesso!");
         }
         private static void InserirEndereco(Aluno aluno)
         {
-            Console.Write("Há endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
-            string isEndereco = Console.ReadLine();
-            while (isEndereco.ToLower().Trim()[0] == 's')
-            {
-                var endereco = ColetaDadosEndereco();
-                endereco.AlunoId = aluno.AlunoId;
-                aluno.Enderecos.Add(endereco);
-                Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
-                isEndereco = Console.ReadLine();
-            }
+            //Console.WriteLine(msg);
+            //string isEndereco = Console.ReadLine();
+            var endereco = ColetaDadosEndereco();
+            endereco.AlunoId = aluno.AlunoId;
+            aluno.Enderecos.Add(endereco);
+            //Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
+            //isEndereco = Console.ReadLine();
+            //while (isEndereco.ToLower().Trim()[0] == 's')
+            //{
+            //    var endereco = ColetaDadosEndereco();
+            //    endereco.AlunoId = aluno.AlunoId;
+            //    aluno.Enderecos.Add(endereco);
+            //    Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
+            //    isEndereco = Console.ReadLine();
+            //}
         }
 
         private static Endereco ColetaDadosEndereco()
