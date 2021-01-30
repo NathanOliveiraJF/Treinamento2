@@ -81,7 +81,13 @@ namespace CadastroAluno.DAOs
 
         public void Deletar(Aluno obj)
         {
-            throw new NotImplementedException();
+            var enderecos = _DbContext.Enderecos.Where(x => x.AlunoId == obj.AlunoId).ToList();
+
+            foreach (var item in enderecos)
+                _DbContext.Entry(item).State = EntityState.Deleted;
+
+            _DbContext.Entry(obj).State = EntityState.Deleted;
+            _DbContext.SaveChanges();
         }
 
 

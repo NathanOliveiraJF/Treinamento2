@@ -24,10 +24,26 @@ namespace CadastroAluno
                 case 2:
                     AlterarAluno();
                     break;
+                case 3:
+                    ExcluirAluno();
+                    break;
                 default:
                     Console.WriteLine("opção inválida!");
                     break;
             }
+        }
+
+        private static void ExcluirAluno()
+        {
+            var context = new AlunoDAO(new CadastroAlunoDbContext());
+
+            Console.Write("Informe a matrícula do Aluno: ");
+            int matricula = Convert.ToInt32(Console.ReadLine());
+            var aluno = context.RetornoPersonalizado((aluno) => aluno.Matricula == matricula)[0];
+            if (aluno != null)
+                context.Deletar(aluno);
+            else
+                Console.WriteLine("Matrícula inválida!");
         }
 
         private static void AlterarAluno()
