@@ -23,11 +23,11 @@ namespace CadastroAluno.DAOs
             foreach (var end in obj.Enderecos)
             {
                 var endContext = enderecos.Where(x => x.EnderecoId == end.EnderecoId).FirstOrDefault();
-                
-                if(endContext != null)
+
+                if (endContext != null)
                 {
                     _DbContext.Entry(endContext).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-                    
+
                     _DbContext.Entry(end).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
                     enderecos.Remove(endContext);
@@ -56,27 +56,20 @@ namespace CadastroAluno.DAOs
 
             foreach (var item in obj.Enderecos)
             {
-                item.EnderecoId = Guid.NewGuid().ToString();
+                if (item.EnderecoId == null)
+                    item.EnderecoId = Guid.NewGuid().ToString();
+
                 _DbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
             }
+
             _DbContext.SaveChanges();
-        }
-
-        public Aluno RetornarPorId(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<Aluno> RetornaTodos()
-        {
-            throw new NotImplementedException();
         }
 
         public IList<Aluno> RetornoPersonalizado(Func<Aluno, bool> busca)
         {
-           return _DbContext.Alunos
-                .Include(e => e.Enderecos)
-                .Where(busca).ToList();
+            return _DbContext.Alunos
+                 .Include(e => e.Enderecos)
+                 .Where(busca).ToList();
         }
 
         public void Deletar(Aluno obj)
@@ -89,7 +82,5 @@ namespace CadastroAluno.DAOs
             _DbContext.Entry(obj).State = EntityState.Deleted;
             _DbContext.SaveChanges();
         }
-
-
     }
 }
