@@ -14,7 +14,7 @@ namespace CadastroAluno
         private static void Opcao()
         {
             Menu();
-            Console.Write("Informe uma opção: ");
+            Console.Write("\nInforme uma opção: ");
             int op = Convert.ToInt32(Console.ReadLine());
             switch (op)
             {
@@ -112,11 +112,11 @@ namespace CadastroAluno
             if (aluno != null)
             {
                 NovosDadosAluno(aluno);
-                Console.WriteLine("Deseja Inserir ou Atualizar um endereço: \n[ 2 ] para inserir\n[ 3 ] para atualizar");
+                Console.WriteLine("Deseja Inserir ou Atualizar um endereço: \n[ 1 ] para inserir\n[ 2 ] para atualizar");
                 var opc = Console.ReadLine();
-                if (opc == "2")
+                if (opc == "1")
                     InserirEndereco(aluno);
-                else if (opc == "3")
+                else if (opc == "2")
                     AtualizaEndereco(aluno);
                 else
                     return;
@@ -154,7 +154,7 @@ namespace CadastroAluno
         private static void Menu()
         {
             Console.Write(
-                           "1) Inserir Aluno\n"
+                           "\n1) Inserir Aluno\n"
                            + "2) Alterar Aluno\n"
                            + "3) Excluir Aluno\n"
                            + "4) Consultar aluno pela Matrícula\n"
@@ -178,21 +178,9 @@ namespace CadastroAluno
         }
         private static void InserirEndereco(Aluno aluno)
         {
-            //Console.WriteLine(msg);
-            //string isEndereco = Console.ReadLine();
             var endereco = ColetaDadosEndereco();
             endereco.AlunoId = aluno.AlunoId;
             aluno.Enderecos.Add(endereco);
-            //Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
-            //isEndereco = Console.ReadLine();
-            //while (isEndereco.ToLower().Trim()[0] == 's')
-            //{
-            //    var endereco = ColetaDadosEndereco();
-            //    endereco.AlunoId = aluno.AlunoId;
-            //    aluno.Enderecos.Add(endereco);
-            //    Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
-            //    isEndereco = Console.ReadLine();
-            //}
         }
 
         private static Endereco ColetaDadosEndereco()
@@ -227,7 +215,16 @@ namespace CadastroAluno
 
         static void Main(string[] args)
         {
-            Opcao();
+            string sair = "";
+            while (sair != "0")
+            {
+                Opcao();
+                Console.Write("Deseja continuar no Menu: \n[ 1 ] para continuar [ 0 ] para sair:  ");
+                sair = Console.ReadLine();
+                Console.Clear();
+            }
+            Console.WriteLine("Saindo...");
+            Console.ReadKey();
         }
     }
 }
