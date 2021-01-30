@@ -79,7 +79,7 @@ namespace CadastroAluno.DAOs
                 .Where(busca).ToList();
         }
 
-        public void Deletar(string id)
+        public void Deletar(Aluno obj)
         {
             throw new NotImplementedException();
         }
