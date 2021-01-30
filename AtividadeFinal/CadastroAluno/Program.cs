@@ -39,10 +39,8 @@ namespace CadastroAluno
         {
             Aluno aluno = ColetaDadosAluno();
             var context = new AlunoDAO(new CadastroAlunoDbContext());
-            context.Inserir(aluno);
-
             InserirEndereco(aluno);
-
+            context.Inserir(aluno);
             Console.WriteLine("Inserido!");
         }
         private static void InserirEndereco(Aluno aluno)
@@ -52,9 +50,9 @@ namespace CadastroAluno
             while (isEndereco.ToLower().Trim()[0] == 's')
             {
                 var endereco = ColetaDadosEndereco();
-                //endereco.IdAluno = aluno.Id;
-                var context = new EnderecoDAO(new CadastroAlunoDbContext());
-                context.Inserir(endereco);
+                endereco.Aluno = aluno;
+                endereco.IdAluno = aluno.IdAluno;
+                aluno.Enderecos.Add(endereco);
                 Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
                 isEndereco = Console.ReadLine();
             }

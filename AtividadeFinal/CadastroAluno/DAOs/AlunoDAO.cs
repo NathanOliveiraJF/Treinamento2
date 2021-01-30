@@ -29,8 +29,10 @@ namespace CadastroAluno.DAOs
             _DbContext.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Added;
 
             foreach (var item in obj.Enderecos)
+            {
+                item.IdEndereco = Guid.NewGuid().ToString();
                 _DbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-            
+            }
             _DbContext.SaveChanges();
         }
 
