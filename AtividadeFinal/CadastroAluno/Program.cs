@@ -30,10 +30,28 @@ namespace CadastroAluno
                 case 4:
                     ConsultarAlunoPelaMatricula();
                     break;
+                case 5:
+                    ConsultarAlunoPorParteDoNome();
+                    break;
                 default:
                     Console.WriteLine("opção inválida!");
                     break;
             }
+        }
+
+        private static void ConsultarAlunoPorParteDoNome()
+        {
+            var context = new AlunoDAO(new CadastroAlunoDbContext());
+            Console.Write("Informe uma parte do nome do Aluno: ");
+            string parteDoNome = Console.ReadLine().ToLower();
+            var aluno = context.RetornoPersonalizado((x) => x.Nome.ToLower().Contains(parteDoNome)).ToList();
+            DadosAlunos(aluno);
+        }
+
+        private static void DadosAlunos(List<Aluno> aluno)
+        {
+            foreach (var item in aluno)
+                Console.WriteLine($"    Matrícula: {item.Matricula} - Nome: {item.Nome} - Email: {item.Email}");
         }
 
         private static void ConsultarAlunoPelaMatricula()
