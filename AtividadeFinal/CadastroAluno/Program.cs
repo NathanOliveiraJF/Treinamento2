@@ -50,8 +50,7 @@ namespace CadastroAluno
             while (isEndereco.ToLower().Trim()[0] == 's')
             {
                 var endereco = ColetaDadosEndereco();
-                endereco.Aluno = aluno;
-                endereco.IdAluno = aluno.IdAluno;
+                endereco.AlunoId = aluno.AlunoId;
                 aluno.Enderecos.Add(endereco);
                 Console.Write("Há mais endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
                 isEndereco = Console.ReadLine();

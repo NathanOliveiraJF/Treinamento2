@@ -23,14 +23,14 @@ namespace CadastroAluno.DAOs
 
         public void Inserir(Aluno obj)
         {
-            if (obj.IdAluno == null)
-                obj.IdAluno = Guid.NewGuid().ToString();
+            if (obj.AlunoId == null)
+                obj.AlunoId = Guid.NewGuid().ToString();
 
             _DbContext.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Added;
 
             foreach (var item in obj.Enderecos)
             {
-                item.IdEndereco = Guid.NewGuid().ToString();
+                item.EnderecoId = Guid.NewGuid().ToString();
                 _DbContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
             }
             _DbContext.SaveChanges();

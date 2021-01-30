@@ -28,8 +28,8 @@ namespace CadastroAluno.DAOs
         public void Inserir(Endereco obj)
         {
 
-            if (obj.IdEndereco == null)
-                obj.IdEndereco = Guid.NewGuid().ToString();
+            if (obj.EnderecoId == null)
+                obj.EnderecoId = Guid.NewGuid().ToString();
 
             _DbContext.Add(obj);
             _DbContext.SaveChanges();

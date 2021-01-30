@@ -20,7 +20,7 @@ namespace CadastroAluno.DAL.Migrations
 
             modelBuilder.Entity("CadastroAluno.Models.Aluno", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("AlunoId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -32,7 +32,7 @@ namespace CadastroAluno.DAL.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AlunoId");
 
                     b.HasIndex("Matricula")
                         .IsUnique();
@@ -42,7 +42,10 @@ namespace CadastroAluno.DAL.Migrations
 
             modelBuilder.Entity("CadastroAluno.Models.Endereco", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("EnderecoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AlunoId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Bairro")
@@ -54,9 +57,6 @@ namespace CadastroAluno.DAL.Migrations
                     b.Property<string>("Complemento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdAluno")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Logradouro")
                         .HasColumnType("nvarchar(max)");
 
@@ -66,20 +66,24 @@ namespace CadastroAluno.DAL.Migrations
                     b.Property<string>("Tipo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EnderecoId");
 
-                    b.HasIndex("IdAluno");
+                    b.HasIndex("AlunoId");
 
                     b.ToTable("Enderecos");
                 });
 
             modelBuilder.Entity("CadastroAluno.Models.Endereco", b =>
                 {
-                    b.HasOne("CadastroAluno.Models.Aluno", "Aluno")
-                        .WithMany()
-                        .HasForeignKey("IdAluno");
+                    b.HasOne("CadastroAluno.Models.Aluno", null)
+                        .WithMany("Enderecos")
+                        .HasForeignKey("AlunoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
-                    b.Navigation("Aluno");
+            modelBuilder.Entity("CadastroAluno.Models.Aluno", b =>
+                {
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

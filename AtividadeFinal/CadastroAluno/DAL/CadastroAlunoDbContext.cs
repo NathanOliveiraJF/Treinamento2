@@ -19,18 +19,13 @@ namespace CadastroAluno.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Aluno>()
-                .HasKey(e => e.IdAluno);
+                .HasMany(e => e.Enderecos)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
+            //Para não repetir a matrícula.
             modelBuilder.Entity<Aluno>()
                 .HasIndex(e => e.Matricula).IsUnique();
-            
-            modelBuilder.Entity<Endereco>()
-                .HasKey(e => e.IdEndereco);
-
-            modelBuilder.Entity<Endereco>()
-                .HasOne(e => e.Aluno)
-                .WithMany()
-                .HasForeignKey(e => e.IdAluno);
         }
     }
 }

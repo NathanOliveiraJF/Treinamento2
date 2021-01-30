@@ -2,7 +2,7 @@
 
 namespace CadastroAluno.DAL.Migrations
 {
-    public partial class SegundaMigration : Migration
+    public partial class CadastroAlunoMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,38 +10,38 @@ namespace CadastroAluno.DAL.Migrations
                 name: "Alunos",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AlunoId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Matricula = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alunos", x => x.Id);
+                    table.PrimaryKey("PK_Alunos", x => x.AlunoId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Enderecos",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EnderecoId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Numero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Bairro = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cidade = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdAluno = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    AlunoId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enderecos", x => x.Id);
+                    table.PrimaryKey("PK_Enderecos", x => x.EnderecoId);
                     table.ForeignKey(
-                        name: "FK_Enderecos_Alunos_IdAluno",
-                        column: x => x.IdAluno,
+                        name: "FK_Enderecos_Alunos_AlunoId",
+                        column: x => x.AlunoId,
                         principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "AlunoId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -51,9 +51,9 @@ namespace CadastroAluno.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enderecos_IdAluno",
+                name: "IX_Enderecos_AlunoId",
                 table: "Enderecos",
-                column: "IdAluno");
+                column: "AlunoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
