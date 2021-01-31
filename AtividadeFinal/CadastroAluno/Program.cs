@@ -69,7 +69,6 @@ namespace CadastroAluno
             if (aluno != null)
             {
                 LerNovosDadosAluno(aluno);
-                //     context.Atualizar(aluno);//Atualiza aluno aqui.
                 if (AlteraEndereco(aluno, context))
                     Console.WriteLine("\n[ aluno Atualizado ]");
             }
@@ -82,7 +81,7 @@ namespace CadastroAluno
             var context = new AlunoDAO(new CadastroAlunoDbContext());
             AlunosMatriculados();
             var matricula = LerMatriculaAluno();
-            var aluno = context.RetornoPersonalizado((aluno) => aluno.Matricula == matricula)[0];
+            var aluno = context.RetornoPersonalizado((aluno) => aluno.Matricula == matricula).FirstOrDefault();
 
             if (aluno != null)
                 context.Deletar(aluno);
@@ -141,7 +140,6 @@ namespace CadastroAluno
         {
             Console.WriteLine("\n[1] para inserir\n[2] para atualizar\n[3] para nenhuma opção");
             Console.Write("Deseja Inserir ou Atualizar um endereço: ");
-          //  var context = new AlunoDAO(new CadastroAlunoDbContext());
             var opc = Console.ReadLine();
             bool att = true;
             switch (opc)
