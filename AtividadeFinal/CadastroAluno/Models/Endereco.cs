@@ -15,5 +15,10 @@ namespace CadastroAluno.Models
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string AlunoId { get; set; }
+
+        public override string ToString()
+        {
+            return $" -Tipo: {Tipo}\n -Logradouro: {Logradouro}\n -Numero: {Numero}\n -Complemento: {Complemento}\n -Bairro: {Bairro}\n -Cidade: {Cidade}";
+        }
     }
 }

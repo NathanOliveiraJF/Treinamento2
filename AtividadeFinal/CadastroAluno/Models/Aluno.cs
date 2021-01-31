@@ -12,5 +12,10 @@ namespace CadastroAluno.Models
         public string Nome { get; set; }
         public string Email { get; set; }
         public IList<Endereco> Enderecos { get; set; } = new List<Endereco>();
+
+        public override string ToString()
+        {
+            return $" -Matrícula: {Matricula}\n -Nome: {Nome}\n -Email: {Email}";
+        }
     }
 }

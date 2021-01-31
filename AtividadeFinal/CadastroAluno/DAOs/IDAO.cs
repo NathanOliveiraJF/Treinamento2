@@ -10,5 +10,6 @@ namespace CadastroAluno.DAOs
         void Atualizar(T obj);
         void Deletar(T id);
         IList<T> RetornoPersonalizado(Func<T, bool> busca);
+        IList<T> RetonarTodos();
     }
 }
