@@ -45,8 +45,11 @@ namespace CadastroAluno
         }
         private static void InserirAluno()
         {
-            Aluno aluno = LerDadosAluno();
             var context = new AlunoDAO(new CadastroAlunoDbContext());
+            Console.WriteLine("\nMatrículas não disponíveis\n");
+            ImprimeDadosDeAlunos(context.RetonarTodos());
+            Aluno aluno = LerDadosAluno();
+         
             Insere(aluno);
             try
             {
@@ -84,7 +87,10 @@ namespace CadastroAluno
             var aluno = context.RetornoPersonalizado((aluno) => aluno.Matricula == matricula).FirstOrDefault();
 
             if (aluno != null)
+            {
                 context.Deletar(aluno);
+                Console.WriteLine("Aluno deletado!");
+            }
             else
                 Console.WriteLine("Matrícula inválida!");
         }
@@ -106,15 +112,6 @@ namespace CadastroAluno
                 Console.WriteLine("\nMatrícula inválida!\n");
         }
 
-        private static void AlunosMatriculados()
-        {
-            var context = new AlunoDAO(new CadastroAlunoDbContext());
-            var alunos = context.RetonarTodos();
-            Console.WriteLine("\nalunos matriculados\n");
-            foreach (var item in alunos)
-                Console.WriteLine($"[ Matricula: {item.Matricula} ] - Nome: {item.Nome}");
-        }
-
         private static void ConsultarAlunoPorParteDoNome()
         {
             var context = new AlunoDAO(new CadastroAlunoDbContext());
@@ -124,6 +121,15 @@ namespace CadastroAluno
             Console.WriteLine("\nAlunos:\n");
             ImprimeDadosDeAlunos(aluno);
         }
+        private static void AlunosMatriculados()
+        {
+            var context = new AlunoDAO(new CadastroAlunoDbContext());
+            var alunos = context.RetonarTodos();
+            Console.WriteLine("\nalunos matriculados\n");
+            foreach (var item in alunos)
+                Console.WriteLine($"[ Matricula: {item.Matricula} ] - Nome: {item.Nome}");
+        }
+
         private static void Insere(Aluno aluno)
         {
             Console.Write("\nHá endereço a ser informado: \n[ s ] para sim e [ n ] para não: ");
@@ -156,6 +162,7 @@ namespace CadastroAluno
                     break;
                 case "3":
                     Console.WriteLine("Atualização de [ Endereço ] cancelada!");
+                    context.Atualizar(aluno);//Altera Aluno sem mexer no Endereço
                     break;
                 default:
                     Console.WriteLine("Opção inválida");
@@ -167,20 +174,22 @@ namespace CadastroAluno
 
         private static void InserirEndereco(Aluno aluno)
         {
-            var endereco = LerDadosEndereco();
+            var endereco = LerDadosEndereco(new Endereco());
             endereco.AlunoId = aluno.AlunoId;
             aluno.Enderecos.Add(endereco);
 
         }
         private static void AtualizaEndereco(Aluno aluno)
         {
-            Console.Write("Informe o tipo de endereço a ser alterado: ");
+            Console.WriteLine("##Endereços para atualizar##");
+            ImprimeDadosEnderecoAluno(aluno.Enderecos);
+            Console.Write("\nInforme o tipo de endereço a ser alterado: ");
             var tipo = Console.ReadLine().ToLower();
             var end = aluno.Enderecos.Where(x => x.Tipo.ToLower() == tipo).FirstOrDefault();
             if (end != null)
             {
-                Console.Write("Informe uma nova Cidade: ");
-                end.Cidade = Console.ReadLine();
+                Console.WriteLine("\nInsira os dados a serem atualizados\n");
+                LerDadosEndereco(end);
             }
             else
                 Console.WriteLine("Endereço inválido");
@@ -204,9 +213,9 @@ namespace CadastroAluno
 
         }
 
-        private static Endereco LerDadosEndereco()
+        private static Endereco LerDadosEndereco(Endereco endereco)
         {
-            var endereco = new Endereco();
+           
             Console.Write("Tipo de Endereço: ");
             endereco.Tipo = Console.ReadLine();
             Console.Write("Logradouro: ");
